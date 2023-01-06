@@ -1,14 +1,18 @@
 const puppeteer = require('puppeteer');
  async function scrape(url){
-    const browser= await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url)
-
-    const [el] = await page.$x('/html/body/div[1]/main/div/div[2]/div/div[1]/article/div/h2/a')
-    const src = await el.getProperty('src')
-    const srcTxt = await src.jsonValue();
-
-    console.log({srcTxt})
+   const axios = require('axios')
+   const cheerio = require('cheerio')
+   
+   axios.get("https://fmmods.com/download-center/mega.php").then(urlResponse => {
+   const $ = cheerio.load(urlResponse.data)
+   $('div.site-wrap clearfix').each((i,element)=> {
+   const link = $(element)
+   .find("a")
+   .attr("href");
+   
+   console.log(link)
+   })
+   });
  }
 
- scrape('https://androidwedakarayo.com/')
+ scrape('https://')
