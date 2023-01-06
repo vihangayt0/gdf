@@ -1,11 +1,14 @@
-const puppeteer require('puppeteer');
+const puppeteer = require('puppeteer');
+ async function scrape(url){
+    const browser= await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url)
 
-async function scrapeProduct(url) { const browser = await puppeteer.launch(); const page = await browser.newPage();
+    const [el] = await page.$x('/html/body/div[1]/main/div/div[2]/div/div[1]/article/div/h2/a')
+    const src = await el.getProperty('src')
+    const srcTxt = await src.jsonValue();
 
-await page.goto(url);
+    console.log({srcTxt})
+ }
 
-const [el] = await page.$x('//*[@id="imgBlkFront"]'); const sIc = await el.getProperty('src'); const srcTxt = await src.jsonValue();
-
-console.log({sicTxt});|
-
-}
+ scrape('https://androidwedakarayo.com/')
