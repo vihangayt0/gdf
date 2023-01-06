@@ -1,12 +1,12 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 
-axios.get("https://technews.lk/tag/technology/").then(urlResponse => {
+axios.get("https://fmmods.com/download-center/mega.php").then(urlResponse => {
 const $ = cheerio.load(urlResponse.data)
-$('h2.article').each((i,element)=> {
+$('div.site-wrap clearfix').each((i,element)=> {
 const link = $(element)
-.find("a.class")
-.attr("post-card-title");
+.find("a")
+.attr("href");
 
 console.log(link)
 })
